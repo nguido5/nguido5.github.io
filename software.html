@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Software & Autonomy – Nicholas Guido</title>
+<meta name="description" content="Planning agents, probabilistic estimation, benchmarking infrastructure and analytics dashboards." />
+<meta property="og:title" content="Software & Autonomy – Nicholas Guido" />
+<meta property="og:description" content="Planning agents, probabilistic estimation, benchmarking infrastructure and analytics dashboards." />
+<meta property="og:type" content="website" />
+<style>
+  :root {
+    --ink:#111827; --muted:#4b5563; --line:#d1d5db; --bg:#f6f8fb; --card:#ffffff;
+    --blue:#1e40af; --blue-dark:#1e3a8a; --blue-soft:#eff6ff; --blue-line:#93c5fd;
+    --green:#15803d; --green-soft:#f0fdf4; --orange:#c2410c; --orange-soft:#fff7ed; --gray-soft:#f8fafc;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:64px}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;font-size:16px}
+  a{color:var(--blue)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.85em;background:#f3f4f6;border:1px solid #e5e7eb;padding:0 4px;border-radius:3px}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+
+  /* Nav */
+  nav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;gap:6px;overflow-x:auto;padding:10px 20px;white-space:nowrap}
+  nav a{text-decoration:none;font-size:.85rem;font-weight:600;color:var(--blue-dark);padding:5px 11px;border-radius:999px;background:var(--blue-soft);border:1px solid var(--blue-line)}
+  nav a:hover{background:#dbeafe}
+
+  /* Hero */
+  header.hero{background:#fff;border-bottom:3px solid var(--ink);padding:44px 0 32px}
+  .hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-.5px}
+  .hero .subtitle{color:#1d4ed8;font-weight:600;font-size:1.1rem;margin:6px 0 14px}
+  .hero .meta{color:var(--muted);font-size:.95rem}
+  .hero .links{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+  .btn{display:inline-block;text-decoration:none;font-weight:600;font-size:.9rem;padding:8px 16px;border-radius:6px;border:1.5px solid var(--blue);color:var(--blue)}
+  .btn.primary{background:var(--blue);color:#fff}
+
+  /* Sections */
+  section{padding:36px 0 8px}
+  .banner{background:var(--blue-soft);border:1.5px solid var(--blue);border-left:6px solid var(--blue);border-radius:6px;padding:12px 16px;margin-bottom:16px;display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:space-between;align-items:center}
+  .banner h2{font-size:1.2rem;color:var(--blue-dark);font-weight:800}
+  .tag{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.75rem;font-weight:600;color:var(--blue);background:#dbeafe;padding:3px 8px;border-radius:4px;border:1px solid var(--blue-line)}
+
+  /* KPIs */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px}
+  .kpi{background:var(--gray-soft);border:1px solid #94a3b8;border-radius:6px;padding:10px 6px;text-align:center}
+  .kpi .val{font-family:ui-monospace,Menlo,monospace;font-size:1.15rem;font-weight:800;color:var(--blue-dark)}
+  .kpi .lbl{font-size:.7rem;font-weight:600;color:#374151;text-transform:uppercase;letter-spacing:.03em}
+
+  /* Flow diagrams */
+  .flow{display:flex;align-items:stretch;gap:0;margin-bottom:16px}
+  .node{flex:1;border:1.5px solid #374151;border-radius:6px;padding:10px 12px;background:var(--gray-soft);font-size:.82rem;min-width:0}
+  .node h4{font-size:.88rem;margin-bottom:6px;text-align:center}
+  .node ul{padding-left:16px}
+  .node li{margin-bottom:2px}
+  .node.blue{background:var(--blue-soft);border-color:#1d4ed8}.node.blue h4{color:var(--blue-dark)}
+  .node.green{background:var(--green-soft);border-color:var(--green)}.node.green h4{color:#14532d}
+  .node.orange{background:var(--orange-soft);border-color:var(--orange)}.node.orange h4{color:#7c2d12}
+  .arrow{align-self:center;flex:0 0 26px;text-align:center;font-weight:800;color:var(--ink)}
+  .arrow::before{content:"\2192"}
+  .flow.wide .node:nth-child(7){flex:1.4}
+  @media (max-width:860px){
+    .flow{flex-direction:column}
+    .arrow{flex:0 0 auto;padding:4px 0}
+    .arrow::before{content:"\2193"}
+  }
+
+  /* Cards */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+  @media (max-width:860px){.grid-2{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid #9ca3af;border-radius:8px;padding:16px 18px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  .card h3{font-size:1rem;color:var(--blue-dark);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+  .card ul{padding-left:18px}
+  .card li{margin-bottom:9px;font-size:.93rem}
+  .card li ul{margin-top:6px}
+  .card p{font-size:.93rem;margin-bottom:10px}
+  .math{display:block;margin-top:6px;overflow-x:auto}
+
+  /* Tables */
+  .table-scroll{overflow-x:auto;margin:8px 0 4px}
+  table{width:100%;border-collapse:collapse;font-size:.85rem;min-width:640px}
+  th,td{border:1px solid #9ca3af;padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:#e5e7eb}
+
+  /* Images */
+  .img-grid{display:grid;gap:14px;margin:8px 0 16px}
+  .img-grid.four{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .img-grid.two{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  figure{background:#fff;border:1px solid #9ca3af;border-radius:8px;padding:8px;text-align:center}
+  figure img{width:100%;height:auto;max-height:340px;object-fit:contain;background:#f3f4f6;border-radius:4px;display:block}
+  figure.dark img{background:#0f172a}
+  figcaption{font-size:.8rem;color:var(--ink);margin-top:6px;line-height:1.35}
+  .project-row{display:grid;grid-template-columns:1.7fr 1fr;gap:16px;align-items:start;margin-bottom:16px}
+  @media (max-width:860px){.project-row{grid-template-columns:1fr}}
+  .project-row figure img{max-height:520px;object-fit:cover}
+
+  footer{margin-top:40px;border-top:2px solid var(--ink);background:#fff;padding:20px 0;color:var(--muted);font-size:.9rem}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+
+  nav a.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+  header.hero.small{padding:26px 0 20px}
+  header.hero.small h1{font-size:clamp(1.5rem,4vw,2rem)}
+  header.hero.small .subtitle{margin:2px 0 0;font-size:1rem}
+  .page-intro{color:var(--muted);margin:28px 0 0;font-size:1rem}
+  .cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin:28px 0 8px}
+  .cat{display:block;text-decoration:none;color:var(--ink);background:#fff;border:1px solid #9ca3af;border-left:6px solid var(--blue);border-radius:8px;padding:20px 22px;box-shadow:0 1px 2px rgba(0,0,0,.04);transition:transform .12s, box-shadow .12s}
+  .cat:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(30,64,175,.15)}
+  .cat h3{font-size:1.2rem;color:var(--blue-dark);margin-bottom:4px}
+  .cat .kicker{font-size:.8rem;font-weight:600;color:#1d4ed8;margin-bottom:10px}
+  .cat ul{padding-left:18px;margin-bottom:12px;font-size:.93rem}
+  .cat li{margin-bottom:4px}
+  .cat .go{font-weight:700;color:var(--blue)}
+  .page-links{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:28px 0 0}
+  figure.wide img{max-height:none}
+</style>
+</head>
+<body>
+
+<header class="hero small">
+  <div class="wrap">
+    <h1>Software &amp; Autonomy</h1>
+    <div class="subtitle">Planning agents, probabilistic estimation, benchmarking infrastructure and analytics dashboards.</div>
+  </div>
+</header>
+<nav><div class="wrap"><a href="index.html">Home</a><a href="validation.html">Test &amp; Validation</a><a href="software.html" class="active">Software &amp; Autonomy</a><a href="aerospace.html">Aerospace Analysis</a><a href="hardware.html">Hardware &amp; Design</a></div></nav>
+<main class="wrap">
+<section id="pomdp">
+  <div class="banner">
+    <h2>2A. Bounded-Time POMDP Belief-Space Autonomy &amp; Planning Agent (Apex-Hybrid-1)</h2>
+    <span class="tag">Python • JAX (@jax.jit) • NumPy • 64-State HMM/POMDP • Alpha-Beta Negamax • 120k TT</span>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="val">64-State</div><div class="lbl">Markov Belief Grid</div></div>
+    <div class="kpi"><div class="val">b₀·T¹⁰⁰⁰</div><div class="lbl">Steady-State Burn-In</div></div>
+    <div class="kpi"><div class="val">120,000</div><div class="lbl">Transposition Table</div></div>
+    <div class="kpi"><div class="val">Depth 13</div><div class="lbl">Hard Horizon Cap</div></div>
+    <div class="kpi"><div class="val">240.0 s</div><div class="lbl">40-Turn Clock Budget</div></div>
+    <div class="kpi"><div class="val">1.5 GB</div><div class="lbl">Sandboxed RAM Cap</div></div>
+  </div>
+
+  <div class="flow">
+    <div class="node blue">
+      <h4>Stochastic Environment &amp; Sensors</h4>
+      <ul><li>8×8 grid (4×64-bit board masks)</li><li>Perturbed T'<sub>ij</sub> = max(0, T<sub>ij</sub>(1+ε))</li><li>Acoustic floor obs (Squeak/Scratch)</li><li>Noisy Manhattan dist e ∈ {−1,0,1,2}</li><li>Search feedback ((x,y), hit/miss)</li><li><code>OpponentTempoTracker</code> bitmask diff</li></ul>
+    </div>
+    <div class="arrow"></div>
+    <div class="node green">
+      <h4>BeliefTracker (64-State HMM)</h4>
+      <ul><li>Sanitizes NaN/Inf/zero-sum rows in T</li><li>Caches T, T² &amp; b<sub>1000</sub> = b<sub>0</sub>·T¹⁰⁰⁰</li><li>Bayes fusion: b⁻ · P(noise|x) · P(d|x)</li><li>Zero-posterior steady-state recovery</li><li>Pre-warmed <code>@jax.jit</code> matvec kernels</li><li>Forward rollouts: <code>predict_layers(ply)</code></li></ul>
+    </div>
+    <div class="arrow"></div>
+    <div class="node">
+      <h4>SearchEngine &amp; MidEvaluator</h4>
+      <ul><li>Dynamic clock pacing (0.08–7.2 s/turn)</li><li>Iterative-deepening negamax (d ≤ 13)</li><li>120k TT (EXACT/LOWER/UPPER) + killers</li><li>Multi-turn MacroContext (runs 4–7)</li><li>V = 115P<sub>Δ</sub> + 46Q<sub>c</sub> + 17.5C + 16R<sub>Δ</sub></li><li>Tempo-window PRIME safety probes</li></ul>
+    </div>
+    <div class="arrow"></div>
+    <div class="node orange">
+      <h4>Sense vs. Act Gate</h4>
+      <ul><li>EV<sub>s</sub> = 4(0.9p) − 2(1−0.9p)</li><li>Compares EV<sub>s</sub> vs board gain</li><li>Cooldown &amp; attempt caps</li><li>Score-lead risk scaling</li><li><code>Board.is_valid_move()</code> guard</li><li>Legal fallback guarantee</li></ul>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Bayesian 64-State POMDP Estimator (<code>BeliefTracker</code>)</h3>
+      <ul>
+        <li><strong>Transition Sanitization &amp; Burn-In:</strong> Sanitizes incoming 64&times;64 transition matrices (perturbed by &epsilon;<sub>ij</sub> &sim; U(−0.1, 0.1) in the game engine) against NaN/Inf and zero-sum rows, caches matrix powers (<code>T</code>, <code>T²</code>), and computes the exact 1,000-step rat head-start distribution (b<sub>1000</sub> = b<sub>0</sub>&middot;T¹⁰⁰⁰) from uniform prior b<sub>0</sub>(i) = 1/64.</li>
+        <li><strong>Multi-Modal Bayesian Sensor Fusion:</strong> Extracts 64-bit board masks (<code>_space</code>, <code>_primed</code>, <code>_carpet</code>, <code>_blocked</code>) to evaluate floor-dependent acoustic likelihoods P(noise | x) and noisy Manhattan distance likelihoods P(d | x) with offset distribution e &in; {−1, 0, +1, +2} at P(e) = (0.12, 0.70, 0.12, 0.06), clamping negative estimates at d = 0:
+          <code class="math">b<sub>t+1</sub>(x) &propto; [b<sub>t</sub>(x)·T^k] &middot; P(noise | cell(x)) &middot; P(d_obs | Manhattan(o, x))</code></li>
+        <li><strong>Search Feedback &amp; Pre-Warmed JAX Rollouts:</strong> Zeros out missed search cells, resets to steady-state b<sub>1000</sub> on captures, and pre-warms <code>@jax.jit</code> matrix-vector kernels during <code>__init__</code> so multi-ply forward belief rollouts (<code>predict_layers</code>) incur zero JIT compilation latency during timed play.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Horizon Planning, Macro Context &amp; Sensing Arbitration (<code>SearchEngine</code>)</h3>
+      <ul>
+        <li><strong>Iterative-Deepening Negamax &amp; Move Ordering:</strong> Explores immutable <code>forecast_move</code> states up to depth 13 using alpha-beta pruning, a 120,000-entry Transposition Table (<code>EXACT</code>, <code>LOWER</code>, <code>UPPER</code> bounds keyed on bitmasks, positions, scores, and turns), 3-slot killer moves, and history heuristics.</li>
+        <li><strong>Belief-Conditioned Evaluation &amp; Macro Horizon:</strong> Scores leaves via <code>V = 115·P_&Delta; + 46·Q_carpet + 17.5·C_conv + 4.4·M_mob + 16·R_&Delta; + 1.1·C_center</code>, weighting top-6 posterior rat cells by inverse Manhattan distance. <code>MacroContext</code> evaluates 2–4 turn horizons to build high-scoring length 4–7 carpet runs (+6 to +21 pts) while penalizing premature short rolls.</li>
+        <li><strong>Opponent Tempo &amp; Sense-vs-Act Arbitration:</strong> <code>OpponentTempoTracker</code> diffs 64-bit masks to infer opponent move types and boost safe <code>PRIME</code> setups during low-impact opponent turns. Decouples <code>SEARCH</code> from tree branching, substituting a rat search only when calibrated expected value <code>EV = 4(0.9p) - 2(1 - 0.9p)</code> beats board gain across phase, lead/deficit, cooldown, and opponent hit-rate gates.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="benchmark">
+  <div class="banner">
+    <h2>2B. Subprocess Sandboxed Tournament Engine &amp; Automated Benchmark Architecture</h2>
+    <span class="tag">Python Multiprocessing • Subprocess Sandboxing • JSON Telemetry • Automated Regression</span>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Isolated Process Execution &amp; Fault-Tolerant Runtime (<code>PlayerProcess</code>)</h3>
+      <ul>
+        <li><strong>Resource &amp; Timing Enforcement:</strong> Executes competing agents inside isolated multiprocessing workers with strict resource caps (<strong>1,536 MB RAM</strong>, <strong>4 GB VRAM</strong>, 30s init timeout, 240s total game clock across 40 turns, 5s queue allowance) and optional privilege dropping / seccomp sandboxing.</li>
+        <li><strong>Closed-Loop Clock Pacing (<code>_compute_deadline</code>):</strong> Dynamically allocates per-turn compute budgets (0.08s–7.2s, targeting 82% clock spend with an 18s reserve buffer and 1.0s safety margin) based on spend lag, pace ratio, branching factor, and game phase (<code>opening</code>, <code>midgame</code>, <code>endgame</code>).</li>
+        <li><strong>Telemetry Commentary (<code>commentate</code>):</strong> Emits live per-turn diagnostics tracking peak posterior probability, search hit rate, active JAX backend, clock spend, tempo windows, and macro-plan cancellation reasons.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Evolutionary Head-to-Head Benchmark Harness (<code>benchmark.py</code>)</h3>
+      <ul>
+        <li><strong>Multi-Game Stochastic Evaluation:</strong> Because transition matrices T'<sub>ij</sub> and corner obstacles vary stochastically every match, built automated batch harnesses (<code>benchmark.py</code>, <code>run_local_agents_series.py</code>, <code>verify_agents.py</code>) to run parallel multi-game series across the Apex agent lineage (<code>Apex-Mid</code>, <code>Apex-Macro</code>, <code>ApexEvo</code>, <code>Apex-Vanguard</code>, <code>Apex-Hybrid-1</code>).</li>
+        <li><strong>Granular Score-Source &amp; Failure Attribution:</strong> Parses match history JSON artifacts to decompose win/loss/tie rates by exact point source (carpet vs. prime vs. rat-search points, plus lost carpet/search penalties), wall-clock think time per turn, and engine termination codes (points win, timeout, invalid turn, crash, OOM).</li>
+        <li><strong>Edge-Case Unit Verification:</strong> Validates zero-probability Shannon entropy guards, out-of-bounds search coercion, and duplicate feedback token suppression prior to tournament deployment.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="asdl">
+  <div class="banner">
+    <h2>6. Aircraft Engine Degradation Prognostics &amp; RUL Maintenance Scheduler (ASDL Research)</h2>
+    <span class="tag">Python • Streamlit • NumPy/pandas • RUL Gradient Heuristics • Interactive Visualization</span>
+  </div>
+  <div class="card">
+    <p>Built a modular Python <strong>Streamlit</strong> analytics dashboard (<code>Dashboard.py</code>) and vector-normalized ingestion pipeline (<code>Data_Generator.py</code>) pairing <strong>10 gas-path auditing metrics across 5 turbofan subsystems</strong> (Burner/Fan, LPC, HPC, HPT, LPT). Implemented a standalone Remaining Useful Life (RUL) scheduler (<code>Scheduler.py: make_sched_df</code>) that computes worst-case paired subsystem degradation d[j] = max(m<sub>0</sub>[j], m<sub>1</sub>[j]), detects threshold crossings j*, estimates local degradation rate RoC = &nabla;d[j] via <code>np.gradient</code>, scales risk-adjusted threshold &tau;<sub>eff</sub> = &tau;(1 + RoC), assigns priority tiers (<code>Critical</code> &le; 0.5&tau;, <code>High</code> &le; &tau;, <code>Medium</code> &le; 1.5&tau;), and resolves maintenance-day collisions across short/medium-haul (11 airports/24 segments) and long-haul (15 airports/27 segments) route maps:</p>
+    <div class="img-grid two">
+      <figure class="dark"><a href="images/ASDL_Chart.png" target="_blank" rel="noopener"><img loading="lazy" src="images/ASDL_Chart.png" alt="ASDL Streamlit Degradation Trajectories" /></a><figcaption>Fig 6.1: Interactive Streamlit Dashboard Visualizing 10 Paired Subsystem Degradation Traces, RUL Slider (τ=20), and Threshold Crossings (Synthetic Demo Run)</figcaption></figure>
+      <figure class="dark"><a href="images/ASDL_Schedule.png" target="_blank" rel="noopener"><img loading="lazy" src="images/ASDL_Schedule.png" alt="ASDL Conflict-Free Maintenance Schedule Table" /></a><figcaption>Fig 6.2: Automated RUL Scheduler Output Flagging Critical/High Priority Subsystems onto Conflict-Free Maintenance Days Alongside Healthy Component Filtering</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<div class="page-links"><a class="btn" href="index.html">← All projects</a><a class="btn primary" href="aerospace.html">Next: Aerospace Analysis →</a></div>
+</main>
+<footer>
+  <div class="wrap">
+    <span>Nicholas Guido — Technical Engineering Portfolio</span>
+    <span><a href="mailto:nicholasguido16@gmail.com">nicholasguido16@gmail.com</a> · <a href="https://linkedin.com/in/nicholas-guido/">LinkedIn</a></span>
+  </div>
+</footer>
+</body>
+</html>

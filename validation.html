@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Test & Validation – Nicholas Guido</title>
+<meta name="description" content="Hardware-in-the-loop rigs, telemetry validators and destructive testing from my work at Slip Robotics." />
+<meta property="og:title" content="Test & Validation – Nicholas Guido" />
+<meta property="og:description" content="Hardware-in-the-loop rigs, telemetry validators and destructive testing from my work at Slip Robotics." />
+<meta property="og:type" content="website" />
+<style>
+  :root {
+    --ink:#111827; --muted:#4b5563; --line:#d1d5db; --bg:#f6f8fb; --card:#ffffff;
+    --blue:#1e40af; --blue-dark:#1e3a8a; --blue-soft:#eff6ff; --blue-line:#93c5fd;
+    --green:#15803d; --green-soft:#f0fdf4; --orange:#c2410c; --orange-soft:#fff7ed; --gray-soft:#f8fafc;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:64px}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;font-size:16px}
+  a{color:var(--blue)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.85em;background:#f3f4f6;border:1px solid #e5e7eb;padding:0 4px;border-radius:3px}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+
+  /* Nav */
+  nav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;gap:6px;overflow-x:auto;padding:10px 20px;white-space:nowrap}
+  nav a{text-decoration:none;font-size:.85rem;font-weight:600;color:var(--blue-dark);padding:5px 11px;border-radius:999px;background:var(--blue-soft);border:1px solid var(--blue-line)}
+  nav a:hover{background:#dbeafe}
+
+  /* Hero */
+  header.hero{background:#fff;border-bottom:3px solid var(--ink);padding:44px 0 32px}
+  .hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-.5px}
+  .hero .subtitle{color:#1d4ed8;font-weight:600;font-size:1.1rem;margin:6px 0 14px}
+  .hero .meta{color:var(--muted);font-size:.95rem}
+  .hero .links{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+  .btn{display:inline-block;text-decoration:none;font-weight:600;font-size:.9rem;padding:8px 16px;border-radius:6px;border:1.5px solid var(--blue);color:var(--blue)}
+  .btn.primary{background:var(--blue);color:#fff}
+
+  /* Sections */
+  section{padding:36px 0 8px}
+  .banner{background:var(--blue-soft);border:1.5px solid var(--blue);border-left:6px solid var(--blue);border-radius:6px;padding:12px 16px;margin-bottom:16px;display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:space-between;align-items:center}
+  .banner h2{font-size:1.2rem;color:var(--blue-dark);font-weight:800}
+  .tag{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.75rem;font-weight:600;color:var(--blue);background:#dbeafe;padding:3px 8px;border-radius:4px;border:1px solid var(--blue-line)}
+
+  /* KPIs */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px}
+  .kpi{background:var(--gray-soft);border:1px solid #94a3b8;border-radius:6px;padding:10px 6px;text-align:center}
+  .kpi .val{font-family:ui-monospace,Menlo,monospace;font-size:1.15rem;font-weight:800;color:var(--blue-dark)}
+  .kpi .lbl{font-size:.7rem;font-weight:600;color:#374151;text-transform:uppercase;letter-spacing:.03em}
+
+  /* Flow diagrams */
+  .flow{display:flex;align-items:stretch;gap:0;margin-bottom:16px}
+  .node{flex:1;border:1.5px solid #374151;border-radius:6px;padding:10px 12px;background:var(--gray-soft);font-size:.82rem;min-width:0}
+  .node h4{font-size:.88rem;margin-bottom:6px;text-align:center}
+  .node ul{padding-left:16px}
+  .node li{margin-bottom:2px}
+  .node.blue{background:var(--blue-soft);border-color:#1d4ed8}.node.blue h4{color:var(--blue-dark)}
+  .node.green{background:var(--green-soft);border-color:var(--green)}.node.green h4{color:#14532d}
+  .node.orange{background:var(--orange-soft);border-color:var(--orange)}.node.orange h4{color:#7c2d12}
+  .arrow{align-self:center;flex:0 0 26px;text-align:center;font-weight:800;color:var(--ink)}
+  .arrow::before{content:"\2192"}
+  .flow.wide .node:nth-child(7){flex:1.4}
+  @media (max-width:860px){
+    .flow{flex-direction:column}
+    .arrow{flex:0 0 auto;padding:4px 0}
+    .arrow::before{content:"\2193"}
+  }
+
+  /* Cards */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+  @media (max-width:860px){.grid-2{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid #9ca3af;border-radius:8px;padding:16px 18px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  .card h3{font-size:1rem;color:var(--blue-dark);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+  .card ul{padding-left:18px}
+  .card li{margin-bottom:9px;font-size:.93rem}
+  .card li ul{margin-top:6px}
+  .card p{font-size:.93rem;margin-bottom:10px}
+  .math{display:block;margin-top:6px;overflow-x:auto}
+
+  /* Tables */
+  .table-scroll{overflow-x:auto;margin:8px 0 4px}
+  table{width:100%;border-collapse:collapse;font-size:.85rem;min-width:640px}
+  th,td{border:1px solid #9ca3af;padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:#e5e7eb}
+
+  /* Images */
+  .img-grid{display:grid;gap:14px;margin:8px 0 16px}
+  .img-grid.four{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .img-grid.two{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  figure{background:#fff;border:1px solid #9ca3af;border-radius:8px;padding:8px;text-align:center}
+  figure img{width:100%;height:auto;max-height:340px;object-fit:contain;background:#f3f4f6;border-radius:4px;display:block}
+  figure.dark img{background:#0f172a}
+  figcaption{font-size:.8rem;color:var(--ink);margin-top:6px;line-height:1.35}
+  .project-row{display:grid;grid-template-columns:1.7fr 1fr;gap:16px;align-items:start;margin-bottom:16px}
+  @media (max-width:860px){.project-row{grid-template-columns:1fr}}
+  .project-row figure img{max-height:520px;object-fit:cover}
+
+  footer{margin-top:40px;border-top:2px solid var(--ink);background:#fff;padding:20px 0;color:var(--muted);font-size:.9rem}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+
+  nav a.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+  header.hero.small{padding:26px 0 20px}
+  header.hero.small h1{font-size:clamp(1.5rem,4vw,2rem)}
+  header.hero.small .subtitle{margin:2px 0 0;font-size:1rem}
+  .page-intro{color:var(--muted);margin:28px 0 0;font-size:1rem}
+  .cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin:28px 0 8px}
+  .cat{display:block;text-decoration:none;color:var(--ink);background:#fff;border:1px solid #9ca3af;border-left:6px solid var(--blue);border-radius:8px;padding:20px 22px;box-shadow:0 1px 2px rgba(0,0,0,.04);transition:transform .12s, box-shadow .12s}
+  .cat:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(30,64,175,.15)}
+  .cat h3{font-size:1.2rem;color:var(--blue-dark);margin-bottom:4px}
+  .cat .kicker{font-size:.8rem;font-weight:600;color:#1d4ed8;margin-bottom:10px}
+  .cat ul{padding-left:18px;margin-bottom:12px;font-size:.93rem}
+  .cat li{margin-bottom:4px}
+  .cat .go{font-weight:700;color:var(--blue)}
+  .page-links{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:28px 0 0}
+  figure.wide img{max-height:none}
+</style>
+</head>
+<body>
+
+<header class="hero small">
+  <div class="wrap">
+    <h1>Test &amp; Validation</h1>
+    <div class="subtitle">Hardware-in-the-loop rigs, telemetry validators and destructive testing from my work at Slip Robotics.</div>
+  </div>
+</header>
+<nav><div class="wrap"><a href="index.html">Home</a><a href="validation.html" class="active">Test &amp; Validation</a><a href="software.html">Software &amp; Autonomy</a><a href="aerospace.html">Aerospace Analysis</a><a href="hardware.html">Hardware &amp; Design</a></div></nav>
+<main class="wrap">
+<section id="motor-rig">
+  <div class="banner">
+    <h2>1A. Full-Stack Hardware-in-the-Loop Motor DVT Rig (Slip Robotics)</h2>
+    <span class="tag">Python • FastAPI • SQLite • pyserial-asyncio • Roboteq ASCII • React/TS</span>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="val">115,200</div><div class="lbl">Baud Async Serial</div></div>
+    <div class="kpi"><div class="val">500 ms</div><div class="lbl">Watchdog Refresh</div></div>
+    <div class="kpi"><div class="val">±1.1865%</div><div class="lbl">RPM Pass Window</div></div>
+    <div class="kpi"><div class="val">10,000</div><div class="lbl">Min Encoder Δ</div></div>
+    <div class="kpi"><div class="val">15A / 40A</div><div class="lbl">3k / 4.25k RPM Cut</div></div>
+    <div class="kpi"><div class="val">9,000 lb</div><div class="lbl">Load-Cell Press DVT</div></div>
+  </div>
+
+  <div class="flow">
+    <div class="node blue">
+      <h4>React + TypeScript UI</h4>
+      <ul><li>RunDashboard &amp; TestTimeline</li><li>Passive WS <code>/ws/runs/{id}</code></li><li>Snapshot-on-connect recovery</li><li>REST <code>/runs/start</code>, <code>/cancel</code></li><li>Prompt modal (UUID, 120s timeout)</li></ul>
+    </div>
+    <div class="arrow"></div>
+    <div class="node">
+      <h4>FastAPI + Runner Orchestrator</h4>
+      <ul><li>Process-wide asyncio Task &amp; Lock</li><li>Gated Canary Sequence (8 steps)</li><li>Injectable async <code>ask_tech</code> prompt</li><li>SQLite: TestRun + TestResultRow</li><li>Relational metadata + JSON payload</li></ul>
+    </div>
+    <div class="arrow"></div>
+    <div class="node green">
+      <h4>Controller Protocol &amp; Driver</h4>
+      <ul><li>Runtime-checkable Protocol DI</li><li>Pure <code>commands.py</code> parser layer</li><li><code>RoboteqController</code> (<code>/dev/roboteq</code>)</li><li><code>asyncio.Lock</code> serial transactions</li><li>0.5 s active watchdog refresh loop</li></ul>
+    </div>
+    <div class="arrow"></div>
+    <div class="node orange">
+      <h4>Gated DVT Sequence</h4>
+      <ul><li>1. Connectivity (5×20ms Hall)</li><li>2. Brake (clamp amps prompt)</li><li>3. MSS Hall tune (<code>!MSS</code> 0x100)</li><li>4. Thermistor (idx 4: 20–40°C)</li><li>5. Spin canary → 6. Hall/Enc</li><li>7. 3000 RPM → 8. 4250 RPM</li></ul>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Protocol-Injected Driver &amp; Gated Canary Safety Architecture</h3>
+      <ul>
+        <li><strong>Structural Protocol DI:</strong> Abstracted hardware behind a runtime-checkable <code>Controller</code> protocol (<code>protocol.py</code>), separating pure ASCII command builders/parsers (<code>commands.py</code>: <code>!G</code>, <code>?HS</code>, <code>?C</code>, <code>?A</code>, <code>?BA</code>, <code>?V 2</code>, <code>?FS</code>, <code>!MSS</code>) from <code>RoboteqController</code> async serial I/O so unit tests run without hardware.</li>
+        <li><strong>Startup Resync &amp; Layered Watchdog:</strong> On connect (10s timeout), driver halts telemetry streaming, drains stale bytes (1s hard cap), disables/saves echo to EEPROM, serializes transactions via <code>asyncio.Lock</code>, and refreshes nonzero commands every <strong>0.5 s</strong> against the hardware’s ~1.0 s watchdog alongside <code>finally</code> stop blocks.</li>
+        <li><strong>Canary Gating:</strong> Sequential orchestrator gates high-energy tests: failing initial Hall connectivity skips all motor commands; failing <code>hall_tune</code> or the 1.5s open-loop <code>spin</code> canary auto-skips downstream motion tests.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Sensor Commissioning &amp; Closed-Loop RPM Acceptance Math</h3>
+      <ul>
+        <li><strong>MSS Hall Angle Calibration (<code>run_hall_tune</code>):</strong> Triggers <code>!MSS</code> and polls status bit <code>0x100</code> (0.5s interval, 90s timeout) while masking expected pre-cal sensor fault bit <code>0x20</code>. Verifies shaft sweep &ge; 500 encoder counts, validates the 12-entry Hall Sensor Angle Table (<code>HSAT</code>, 0–511 electrical angle scale &ne; 128 default) and winding-swap flag before EEPROM save.</li>
+        <li><strong>Combined Hall &amp; Monotonic Encoder Validation:</strong> Samples both sensors in one 3.0s spin (50 ms poll): requires all valid Hall states <code>[1..6]</code> with zero forbidden states <code>[0, 7]</code>, total encoder &Delta; &ge; 10,000 counts, and strict sign monotonicity across noise-filtered deltas (|&Delta;<sub>i</sub>| &gt; 1).</li>
+        <li><strong>RPM &amp; Current Cutoffs:</strong> Scales command u = round((RPM/4250)&times;1000) (<code>u=706</code> at 3000 RPM). Enforces &plusmn;1.1865% steady-state mean RPM window, &le; 6 A mean motor current at 3000 RPM, and instantaneous cutoffs at <strong>15 A</strong> (3000 RPM) and <strong>40 A</strong> (4250 RPM).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="telemetry">
+  <div class="banner">
+    <h2>1B. ROS1 / MCAP Autonomy Telemetry Validator &amp; Mechanical DVT (Slip Robotics)</h2>
+    <span class="tag">ROS1 Bags • MCAP • pandas/NumPy • State Machines • LabJack DAQ • RS-485</span>
+  </div>
+
+  <div class="flow wide">
+    <div class="node blue">
+      <h4>1. bag_to_mcap.py</h4>
+      <ul><li>Sorts split ROS1 .bag files</li><li>Stitches by start_time</li><li>Writes single ROS1 MCAP</li></ul>
+    </div>
+    <div class="arrow"></div>
+    <div class="node">
+      <h4>2. mcap_loader.py</h4>
+      <ul><li>Decodes 10 ROS topics once</li><li>Normalizes t_s = Δt_ns / 1e9</li><li>Tolerates truncated bag tails</li></ul>
+    </div>
+    <div class="arrow"></div>
+    <div class="node green">
+      <h4>3. Pure DataFrame Detectors &amp; Extractors</h4>
+      <ul><li><code>state_detector</code>: edge diff Δb<sub>i</sub> = b<sub>i</sub> − b<sub>i−1</sub> (move &gt; 0.01 m/s)</li><li><code>autonomy_assessment</code>: Acquire {28,33} vs Deposit {29,30} ≥ 1000 lb</li><li><code>stall_detector</code> (3s/30s) • controller response • 4-wheel asymmetry</li></ul>
+    </div>
+    <div class="arrow"></div>
+    <div class="node orange">
+      <h4>4. Validator &amp; Export</h4>
+      <ul><li>20k lb weight-gated verdict</li><li>PASS / FAIL / REPORT_ONLY</li><li>JSON + HTTP cloud upload</li></ul>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Physical State-Transition &amp; Telemetry Anomaly Algorithms</h3>
+      <ul>
+        <li><strong>Physical Semantics Over State Labels:</strong> Maps state-machine enums to physical payload transitions rather than trailer-centric names (<code>ACQUIRE_STATES = {28, 33}</code> empty&rarr;loaded vs. <code>DEPOSIT_STATES = {29, 30}</code> loaded&rarr;empty), verifying <code>payload_weight_lbs &ge; 1000 lb</code> across &plusmn;120 s clipped windows so later retries cannot mask earlier failed attempts.</li>
+        <li><strong>4-Wheel Current Asymmetry &amp; Regen Braking:</strong> Retains signed currents for regenerative braking while computing mean, std, p5/p95, abs-max, and fleet asymmetry across counter-rotating motors: dev<sub>i</sub> = ||I<sub>i</sub>| − I<sub>fleet</sub>| / I<sub>fleet</sub> &times; 100%.</li>
+        <li><strong>Stall, Latency &amp; RFID Checks:</strong> Flags safety-limiter blocks (&ge; 3.0 s) and commanded idle stalls (&le; 0.02 m/s for &ge; 30 s, excluding lift states 3/4). Measures XBee joystick onset (center 128 &plusmn; 20 deadzone) to <code>cmd_vel &gt; 0.02</code> latency (&le; 1.0 s limit) and majority-votes <code>/rfid_scanner/tray_id</code> (Prototype/20K/14K/10K).</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Destructive Mechanical DVT, Battery Cycling &amp; Fleet Work</h3>
+      <ul>
+        <li><strong>Hydraulic Press Delamination DVT:</strong> Bandsaw-sectioned rollers and logged live <strong>LabJack DAQ (<code>LJLogM</code>)</strong> load-cell data across destructive press trials (up to <strong>9,000 lb</strong>), deriving linear load-scaling models (e.g., <code>F(a) = 892,498.55·a + 83 [lb]</code>) to characterize delamination failure thresholds across polyurethane variants.</li>
+        <li><strong>RS-485 Battery DVT &amp; Hydraulic Diagnostics:</strong> Configured 9600-baud RS-485 comms to run 4-stage charge/depletion DVT cycles across 8 batteries; root-caused hydraulic parking-brake full-stroking to valve pressure differential/stiction.</li>
+        <li><strong>Sim-to-Real &amp; Fleet Verification:</strong> Validated Windows NVIDIA &rarr; WSL2 &rarr; Docker (<code>--gpus all</code>) CUDA passthrough for Gazebo autonomy sim; used SSH and <code>rostopic echo</code> on Bot 111 to verify GPS antenna thresholds.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="page-links"><a class="btn" href="index.html">← All projects</a><a class="btn primary" href="software.html">Next: Software &amp; Autonomy →</a></div>
+</main>
+<footer>
+  <div class="wrap">
+    <span>Nicholas Guido — Technical Engineering Portfolio</span>
+    <span><a href="mailto:nicholasguido16@gmail.com">nicholasguido16@gmail.com</a> · <a href="https://linkedin.com/in/nicholas-guido/">LinkedIn</a></span>
+  </div>
+</footer>
+</body>
+</html>
