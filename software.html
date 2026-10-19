@@ -127,7 +127,7 @@
 <main class="wrap">
 <section id="pomdp">
   <div class="banner">
-    <h2>2A. Bounded-Time POMDP Belief-Space Autonomy &amp; Planning Agent (Apex-Hybrid-1)</h2>
+    <h2>Bounded-Time POMDP Belief-Space Autonomy &amp; Planning Agent (Apex-Hybrid-1)</h2>
     <span class="tag">Python • JAX (@jax.jit) • NumPy • 64-State HMM/POMDP • Alpha-Beta Negamax • 120k TT</span>
   </div>
 
@@ -185,7 +185,7 @@
 
 <section id="benchmark">
   <div class="banner">
-    <h2>2B. Subprocess Sandboxed Tournament Engine &amp; Automated Benchmark Architecture</h2>
+    <h2>Subprocess Sandboxed Tournament Engine &amp; Automated Benchmark Architecture</h2>
     <span class="tag">Python Multiprocessing • Subprocess Sandboxing • JSON Telemetry • Automated Regression</span>
   </div>
   <div class="grid-2">
@@ -210,14 +210,14 @@
 
 <section id="asdl">
   <div class="banner">
-    <h2>6. Aircraft Engine Degradation Prognostics &amp; RUL Maintenance Scheduler (ASDL Research)</h2>
+    <h2>Aircraft Engine Degradation Prognostics &amp; RUL Maintenance Scheduler (ASDL Research)</h2>
     <span class="tag">Python • Streamlit • NumPy/pandas • RUL Gradient Heuristics • Interactive Visualization</span>
   </div>
   <div class="card">
     <p>Built a modular Python <strong>Streamlit</strong> analytics dashboard (<code>Dashboard.py</code>) and vector-normalized ingestion pipeline (<code>Data_Generator.py</code>) pairing <strong>10 gas-path auditing metrics across 5 turbofan subsystems</strong> (Burner/Fan, LPC, HPC, HPT, LPT). Implemented a standalone Remaining Useful Life (RUL) scheduler (<code>Scheduler.py: make_sched_df</code>) that computes worst-case paired subsystem degradation d[j] = max(m<sub>0</sub>[j], m<sub>1</sub>[j]), detects threshold crossings j*, estimates local degradation rate RoC = &nabla;d[j] via <code>np.gradient</code>, scales risk-adjusted threshold &tau;<sub>eff</sub> = &tau;(1 + RoC), assigns priority tiers (<code>Critical</code> &le; 0.5&tau;, <code>High</code> &le; &tau;, <code>Medium</code> &le; 1.5&tau;), and resolves maintenance-day collisions across short/medium-haul (11 airports/24 segments) and long-haul (15 airports/27 segments) route maps:</p>
     <div class="img-grid two">
-      <figure class="dark"><a href="images/ASDL_Chart.png" target="_blank" rel="noopener"><img loading="lazy" src="images/ASDL_Chart.png" alt="ASDL Streamlit Degradation Trajectories" /></a><figcaption>Fig 6.1: Interactive Streamlit Dashboard Visualizing 10 Paired Subsystem Degradation Traces, RUL Slider (τ=20), and Threshold Crossings (Synthetic Demo Run)</figcaption></figure>
-      <figure class="dark"><a href="images/ASDL_Schedule.png" target="_blank" rel="noopener"><img loading="lazy" src="images/ASDL_Schedule.png" alt="ASDL Conflict-Free Maintenance Schedule Table" /></a><figcaption>Fig 6.2: Automated RUL Scheduler Output Flagging Critical/High Priority Subsystems onto Conflict-Free Maintenance Days Alongside Healthy Component Filtering</figcaption></figure>
+      <figure class="dark"><a href="images/ASDL_Chart.png" target="_blank" rel="noopener"><img loading="lazy" src="images/ASDL_Chart.png" alt="ASDL Streamlit Degradation Trajectories" /></a><figcaption>Fig 1: Interactive Streamlit Dashboard Visualizing 10 Paired Subsystem Degradation Traces, RUL Slider (τ=20), and Threshold Crossings (Synthetic Demo Run)</figcaption></figure>
+      <figure class="dark"><a href="images/ASDL_Schedule.png" target="_blank" rel="noopener"><img loading="lazy" src="images/ASDL_Schedule.png" alt="ASDL Conflict-Free Maintenance Schedule Table" /></a><figcaption>Fig 2: Automated RUL Scheduler Output Flagging Critical/High Priority Subsystems onto Conflict-Free Maintenance Days Alongside Healthy Component Filtering</figcaption></figure>
     </div>
   </div>
 </section>

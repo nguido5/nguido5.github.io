@@ -113,6 +113,8 @@
   .cat .go{font-weight:700;color:var(--blue)}
   .page-links{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:28px 0 0}
   figure.wide img{max-height:none}
+  .project-row figure .crop{position:relative;aspect-ratio:1/1;overflow:hidden;border-radius:4px;background:#f3f4f6}
+  .project-row figure .crop img{position:absolute;width:136.5%;max-width:none;height:auto;max-height:none;left:-7.4%;top:-31.5%;object-fit:fill}
 </style>
 </head>
 <body>
@@ -127,7 +129,7 @@
 <main class="wrap">
 <section id="quadcopter">
   <div class="banner">
-    <h2>4. Custom FPV Quadcopter Build, Instrumentation &amp; Betaflight 4.4.3 PID Flight Testing</h2>
+    <h2>Custom FPV Quadcopter Build, Instrumentation &amp; Betaflight 4.4.3 PID Flight Testing</h2>
     <span class="tag">STM32F405 • BMI270 Gyro • 50A 4-in-1 ESC • Blackbox Logging • PID Tuning</span>
   </div>
 
@@ -141,15 +143,15 @@
       </ul>
     </div>
     <figure>
-      <img loading="lazy" src="images/Drone.jpg" alt="Soldered FPV Quadcopter Testbed" />
-      <figcaption>Fig 4.1: Assembled &amp; Soldered 220mm Carbon-Fiber Quadcopter Testbed (SpeedyBee STM32F405 V3 Stack, BR2205 2300KV Motors, HQProp 5×4.3×3, 4S LiPo)</figcaption>
+      <div class="crop"><img loading="lazy" src="images/Drone.jpg" alt="Soldered FPV Quadcopter Testbed" /></div>
+      <figcaption>Fig 1: Assembled &amp; Soldered 220mm Carbon-Fiber Quadcopter Testbed (SpeedyBee STM32F405 V3 Stack, BR2205 2300KV Motors, HQProp 5×4.3×3, 4S LiPo)</figcaption>
     </figure>
   </div>
 </section>
 
 <section id="lunar">
   <div class="banner">
-    <h2>5. "First Step" Lunar EVA Boot Multi-Sensor Fusion Platform — 1st Place, GT AIAA Hackathon</h2>
+    <h2>"First Step" Lunar EVA Boot Multi-Sensor Fusion Platform — 1st Place, GT AIAA Hackathon</h2>
     <span class="tag">UWB GPR (1.5–3 GHz) • MEMS FT-NIR • PZT Energy Harvesting • SM-24 Geophone</span>
   </div>
   <div class="card">
