@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nicholas Guido – Engineering Portfolio</title>
+<meta name="description" content="Engineering portfolio of Nicholas Guido: autonomous systems validation, flight dynamics, CFD, POMDP planning agents and hardware testing. Georgia Tech Aerospace Engineering." />
+<meta property="og:title" content="Nicholas Guido – Engineering Portfolio" />
+<meta property="og:description" content="Autonomous systems validation, flight dynamics &amp; hardware testing. Georgia Tech Aerospace Engineering." />
+<meta property="og:type" content="website" />
+<style>
+  :root {
+    --ink:#111827; --muted:#4b5563; --line:#d1d5db; --bg:#f6f8fb; --card:#ffffff;
+    --blue:#1e40af; --blue-dark:#1e3a8a; --blue-soft:#eff6ff; --blue-line:#93c5fd;
+    --green:#15803d; --green-soft:#f0fdf4; --orange:#c2410c; --orange-soft:#fff7ed; --gray-soft:#f8fafc;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:64px}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;font-size:16px}
+  a{color:var(--blue)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.85em;background:#f3f4f6;border:1px solid #e5e7eb;padding:0 4px;border-radius:3px}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+
+  /* Nav */
+  nav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;gap:6px;overflow-x:auto;padding:10px 20px;white-space:nowrap}
+  nav a{text-decoration:none;font-size:.85rem;font-weight:600;color:var(--blue-dark);padding:5px 11px;border-radius:999px;background:var(--blue-soft);border:1px solid var(--blue-line)}
+  nav a:hover{background:#dbeafe}
+
+  /* Hero */
+  header.hero{background:#fff;border-bottom:3px solid var(--ink);padding:44px 0 32px}
+  .hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-.5px}
+  .hero .subtitle{color:#1d4ed8;font-weight:600;font-size:1.1rem;margin:6px 0 14px}
+  .hero .meta{color:var(--muted);font-size:.95rem}
+  .hero .links{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+  .btn{display:inline-block;text-decoration:none;font-weight:600;font-size:.9rem;padding:8px 16px;border-radius:6px;border:1.5px solid var(--blue);color:var(--blue)}
+  .btn.primary{background:var(--blue);color:#fff}
+
+  /* Sections */
+  section{padding:36px 0 8px}
+  .banner{background:var(--blue-soft);border:1.5px solid var(--blue);border-left:6px solid var(--blue);border-radius:6px;padding:12px 16px;margin-bottom:16px;display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:space-between;align-items:center}
+  .banner h2{font-size:1.2rem;color:var(--blue-dark);font-weight:800}
+  .tag{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.75rem;font-weight:600;color:var(--blue);background:#dbeafe;padding:3px 8px;border-radius:4px;border:1px solid var(--blue-line)}
+
+  /* KPIs */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px}
+  .kpi{background:var(--gray-soft);border:1px solid #94a3b8;border-radius:6px;padding:10px 6px;text-align:center}
+  .kpi .val{font-family:ui-monospace,Menlo,monospace;font-size:1.15rem;font-weight:800;color:var(--blue-dark)}
+  .kpi .lbl{font-size:.7rem;font-weight:600;color:#374151;text-transform:uppercase;letter-spacing:.03em}
+
+  /* Flow diagrams */
+  .flow{display:flex;align-items:stretch;gap:0;margin-bottom:16px}
+  .node{flex:1;border:1.5px solid #374151;border-radius:6px;padding:10px 12px;background:var(--gray-soft);font-size:.82rem;min-width:0}
+  .node h4{font-size:.88rem;margin-bottom:6px;text-align:center}
+  .node ul{padding-left:16px}
+  .node li{margin-bottom:2px}
+  .node.blue{background:var(--blue-soft);border-color:#1d4ed8}.node.blue h4{color:var(--blue-dark)}
+  .node.green{background:var(--green-soft);border-color:var(--green)}.node.green h4{color:#14532d}
+  .node.orange{background:var(--orange-soft);border-color:var(--orange)}.node.orange h4{color:#7c2d12}
+  .arrow{align-self:center;flex:0 0 26px;text-align:center;font-weight:800;color:var(--ink)}
+  .arrow::before{content:"\2192"}
+  .flow.wide .node:nth-child(7){flex:1.4}
+  @media (max-width:860px){
+    .flow{flex-direction:column}
+    .arrow{flex:0 0 auto;padding:4px 0}
+    .arrow::before{content:"\2193"}
+  }
+
+  /* Cards */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+  @media (max-width:860px){.grid-2{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid #9ca3af;border-radius:8px;padding:16px 18px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  .card h3{font-size:1rem;color:var(--blue-dark);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+  .card ul{padding-left:18px}
+  .card li{margin-bottom:9px;font-size:.93rem}
+  .card li ul{margin-top:6px}
+  .card p{font-size:.93rem;margin-bottom:10px}
+  .math{display:block;margin-top:6px;overflow-x:auto}
+
+  /* Tables */
+  .table-scroll{overflow-x:auto;margin:8px 0 4px}
+  table{width:100%;border-collapse:collapse;font-size:.85rem;min-width:640px}
+  th,td{border:1px solid #9ca3af;padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:#e5e7eb}
+
+  /* Images */
+  .img-grid{display:grid;gap:14px;margin:8px 0 16px}
+  .img-grid.four{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .img-grid.two{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  figure{background:#fff;border:1px solid #9ca3af;border-radius:8px;padding:8px;text-align:center}
+  figure img{width:100%;height:auto;max-height:340px;object-fit:contain;background:#f3f4f6;border-radius:4px;display:block}
+  figure.dark img{background:#0f172a}
+  figcaption{font-size:.8rem;color:var(--ink);margin-top:6px;line-height:1.35}
+  .project-row{display:grid;grid-template-columns:1.7fr 1fr;gap:16px;align-items:start;margin-bottom:16px}
+  @media (max-width:860px){.project-row{grid-template-columns:1fr}}
+  .project-row figure img{max-height:520px;object-fit:cover}
+
+  footer{margin-top:40px;border-top:2px solid var(--ink);background:#fff;padding:20px 0;color:var(--muted);font-size:.9rem}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>Nicholas Guido</h1>
+    <div class="subtitle">Engineering Project Portfolio — Autonomous Systems Validation, Flight Dynamics &amp; Hardware Testing</div>
+    <p class="meta">Georgia Institute of Technology · B.S. Aerospace Engineering, Minor in CS &amp; Intelligence · GPA 4.0 · US Citizen</p>
+    <div class="links">
+      <a class="btn primary" href="mailto:nicholasguido16@gmail.com">Email</a>
+      <a class="btn" href="https://linkedin.com/in/nicholas-guido/">LinkedIn</a>
+      <a class="btn" href="https://github.com/YOUR-USERNAME">GitHub</a>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="wrap">
+    <a href="#motor-rig">Motor DVT Rig</a>
+    <a href="#telemetry">ROS/MCAP Validator</a>
+    <a href="#pomdp">POMDP Agent</a>
+    <a href="#benchmark">Benchmark Harness</a>
+    <a href="#flightsim">Flight Simulator</a>
+    <a href="#cfd">CFD</a>
+    <a href="#quadcopter">Quadcopter</a>
+    <a href="#lunar">Lunar Boot</a>
+    <a href="#asdl">Engine RUL</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ============ 1A ============ -->
+<section id="motor-rig">
+  <div class="banner">
+    <h2>1A. Full-Stack Hardware-in-the-Loop Motor DVT Rig (Slip Robotics)</h2>
+    <span class="tag">Python • FastAPI • SQLite • pyserial-asyncio • Roboteq ASCII • React/TS</span>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="val">115,200</div><div class="lbl">Baud Async Serial</div></div>
+    <div class="kpi"><div class="val">500 ms</div><div class="lbl">Watchdog Refresh</div></div>
+    <div class="kpi"><div class="val">±1.1865%</div><div class="lbl">RPM Pass Window</div></div>
+    <div class="kpi"><div class="val">10,000</div><div class="lbl">Min Encoder Δ</div></div>
+    <div class="kpi"><div class="val">15A / 40A</div><div class="lbl">3k / 4.25k RPM Cut</div></div>
+    <div class="kpi"><div class="val">9,000 lb</div><div class="lbl">Load-Cell Press DVT</div></div>
+  </div>
+
+  <div class="flow">
+    <div class="node blue">
+      <h4>React + TypeScript UI</h4>
+      <ul><li>RunDashboard &amp; TestTimeline</li><li>Passive WS <code>/ws/runs/{id}</code></li><li>Snapshot-on-connect recovery</li><li>REST <code>/runs/start</code>, <code>/cancel</code></li><li>Prompt modal (UUID, 120s timeout)</li></ul>
+    </div>
+    <div class="arrow"></div>
+    <div class="node">
+      <h4>FastAPI + Runner Orchestrator</h4>
+      <ul><li>Process-wide asyncio Task &amp; Lock</li><li>Gated Canary Sequence (8 steps)</li><li>Injectable async <code>ask_tech</code> prompt</li><li>SQLite: TestRun + TestResultRow</li><li>Relational metadata + JSON payload</li></ul>
+    </div>
+    <div class="arrow"></div>
+    <div class="node green">
+      <h4>Controller Protocol &amp; Driver</h4>
+      <ul><li>Runtime-checkable Protocol DI</li><li>Pure <code>commands.py</code> parser layer</li><li><code>RoboteqController</code> (<code>/dev/roboteq</code>)</li><li><code>asyncio.Lock</code> serial transactions</li><li>0.5 s active watchdog refresh loop</li></ul>
+    </div>
+    <div class="arrow"></div>
+    <div class="node orange">
+      <h4>Gated DVT Sequence</h4>
+      <ul><li>1. Connectivity (5×20ms Hall)</li><li>2. Brake (clamp amps prompt)</li><li>3. MSS Hall tune (<code>!MSS</code> 0x100)</li><li>4. Thermistor (idx 4: 20–40°C)</li><li>5. Spin canary → 6. Hall/Enc</li><li>7. 3000 RPM → 8. 4250 RPM</li></ul>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Protocol-Injected Driver &amp; Gated Canary Safety Architecture</h3>
+      <ul>
+        <li><strong>Structural Protocol DI:</strong> Abstracted hardware behind a runtime-checkable <code>Controller</code> protocol (<code>protocol.py</code>), separating pure ASCII command builders/parsers (<code>commands.py</code>: <code>!G</code>, <code>?HS</code>, <code>?C</code>, <code>?A</code>, <code>?BA</code>, <code>?V 2</code>, <code>?FS</code>, <code>!MSS</code>) from <code>RoboteqController</code> async serial I/O so unit tests run without hardware.</li>
+        <li><strong>Startup Resync &amp; Layered Watchdog:</strong> On connect (10s timeout), driver halts telemetry streaming, drains stale bytes (1s hard cap), disables/saves echo to EEPROM, serializes transactions via <code>asyncio.Lock</code>, and refreshes nonzero commands every <strong>0.5 s</strong> against the hardware’s ~1.0 s watchdog alongside <code>finally</code> stop blocks.</li>
+        <li><strong>Canary Gating:</strong> Sequential orchestrator gates high-energy tests: failing initial Hall connectivity skips all motor commands; failing <code>hall_tune</code> or the 1.5s open-loop <code>spin</code> canary auto-skips downstream motion tests.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Sensor Commissioning &amp; Closed-Loop RPM Acceptance Math</h3>
+      <ul>
+        <li><strong>MSS Hall Angle Calibration (<code>run_hall_tune</code>):</strong> Triggers <code>!MSS</code> and polls status bit <code>0x100</code> (0.5s interval, 90s timeout) while masking expected pre-cal sensor fault bit <code>0x20</code>. Verifies shaft sweep &ge; 500 encoder counts, validates the 12-entry Hall Sensor Angle Table (<code>HSAT</code>, 0–511 electrical angle scale &ne; 128 default) and winding-swap flag before EEPROM save.</li>
+        <li><strong>Combined Hall &amp; Monotonic Encoder Validation:</strong> Samples both sensors in one 3.0s spin (50 ms poll): requires all valid Hall states <code>[1..6]</code> with zero forbidden states <code>[0, 7]</code>, total encoder &Delta; &ge; 10,000 counts, and strict sign monotonicity across noise-filtered deltas (|&Delta;<sub>i</sub>| &gt; 1).</li>
+        <li><strong>RPM &amp; Current Cutoffs:</strong> Scales command u = round((RPM/4250)&times;1000) (<code>u=706</code> at 3000 RPM). Enforces &plusmn;1.1865% steady-state mean RPM window, &le; 6 A mean motor current at 3000 RPM, and instantaneous cutoffs at <strong>15 A</strong> (3000 RPM) and <strong>40 A</strong> (4250 RPM).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 1B ============ -->
+<section id="telemetry">
+  <div class="banner">
+    <h2>1B. ROS1 / MCAP Autonomy Telemetry Validator &amp; Mechanical DVT (Slip Robotics)</h2>
+    <span class="tag">ROS1 Bags • MCAP • pandas/NumPy • State Machines • LabJack DAQ • RS-485</span>
+  </div>
+
+  <div class="flow wide">
+    <div class="node blue">
+      <h4>1. bag_to_mcap.py</h4>
+      <ul><li>Sorts split ROS1 .bag files</li><li>Stitches by start_time</li><li>Writes single ROS1 MCAP</li></ul>
+    </div>
+    <div class="arrow"></div>
+    <div class="node">
+      <h4>2. mcap_loader.py</h4>
+      <ul><li>Decodes 10 ROS topics once</li><li>Normalizes t_s = Δt_ns / 1e9</li><li>Tolerates truncated bag tails</li></ul>
+    </div>
+    <div class="arrow"></div>
+    <div class="node green">
+      <h4>3. Pure DataFrame Detectors &amp; Extractors</h4>
+      <ul><li><code>state_detector</code>: edge diff Δb<sub>i</sub> = b<sub>i</sub> − b<sub>i−1</sub> (move &gt; 0.01 m/s)</li><li><code>autonomy_assessment</code>: Acquire {28,33} vs Deposit {29,30} ≥ 1000 lb</li><li><code>stall_detector</code> (3s/30s) • controller response • 4-wheel asymmetry</li></ul>
+    </div>
+    <div class="arrow"></div>
+    <div class="node orange">
+      <h4>4. Validator &amp; Export</h4>
+      <ul><li>20k lb weight-gated verdict</li><li>PASS / FAIL / REPORT_ONLY</li><li>JSON + HTTP cloud upload</li></ul>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Physical State-Transition &amp; Telemetry Anomaly Algorithms</h3>
+      <ul>
+        <li><strong>Physical Semantics Over State Labels:</strong> Maps state-machine enums to physical payload transitions rather than trailer-centric names (<code>ACQUIRE_STATES = {28, 33}</code> empty&rarr;loaded vs. <code>DEPOSIT_STATES = {29, 30}</code> loaded&rarr;empty), verifying <code>payload_weight_lbs &ge; 1000 lb</code> across &plusmn;120 s clipped windows so later retries cannot mask earlier failed attempts.</li>
+        <li><strong>4-Wheel Current Asymmetry &amp; Regen Braking:</strong> Retains signed currents for regenerative braking while computing mean, std, p5/p95, abs-max, and fleet asymmetry across counter-rotating motors: dev<sub>i</sub> = ||I<sub>i</sub>| − I<sub>fleet</sub>| / I<sub>fleet</sub> &times; 100%.</li>
+        <li><strong>Stall, Latency &amp; RFID Checks:</strong> Flags safety-limiter blocks (&ge; 3.0 s) and commanded idle stalls (&le; 0.02 m/s for &ge; 30 s, excluding lift states 3/4). Measures XBee joystick onset (center 128 &plusmn; 20 deadzone) to <code>cmd_vel &gt; 0.02</code> latency (&le; 1.0 s limit) and majority-votes <code>/rfid_scanner/tray_id</code> (Prototype/20K/14K/10K).</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Destructive Mechanical DVT, Battery Cycling &amp; Fleet Work</h3>
+      <ul>
+        <li><strong>Hydraulic Press Delamination DVT:</strong> Bandsaw-sectioned rollers and logged live <strong>LabJack DAQ (<code>LJLogM</code>)</strong> load-cell data across destructive press trials (up to <strong>9,000 lb</strong>), deriving linear load-scaling models (e.g., <code>F(a) = 892,498.55·a + 83 [lb]</code>) to characterize delamination failure thresholds across polyurethane variants.</li>
+        <li><strong>RS-485 Battery DVT &amp; Hydraulic Diagnostics:</strong> Configured 9600-baud RS-485 comms to run 4-stage charge/depletion DVT cycles across 8 batteries; root-caused hydraulic parking-brake full-stroking to valve pressure differential/stiction.</li>
+        <li><strong>Sim-to-Real &amp; Fleet Verification:</strong> Validated Windows NVIDIA &rarr; WSL2 &rarr; Docker (<code>--gpus all</code>) CUDA passthrough for Gazebo autonomy sim; used SSH and <code>rostopic echo</code> on Bot 111 to verify GPS antenna thresholds.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2A ============ -->
+<section id="pomdp">
+  <div class="banner">
+    <h2>2A. Bounded-Time POMDP Belief-Space Autonomy &amp; Planning Agent (Apex-Hybrid-1)</h2>
+    <span class="tag">Python • JAX (@jax.jit) • NumPy • 64-State HMM/POMDP • Alpha-Beta Negamax • 120k TT</span>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="val">64-State</div><div class="lbl">Markov Belief Grid</div></div>
+    <div class="kpi"><div class="val">b₀·T¹⁰⁰⁰</div><div class="lbl">Steady-State Burn-In</div></div>
+    <div class="kpi"><div class="val">120,000</div><div class="lbl">Transposition Table</div></div>
+    <div class="kpi"><div class="val">Depth 13</div><div class="lbl">Hard Horizon Cap</div></div>
+    <div class="kpi"><div class="val">240.0 s</div><div class="lbl">40-Turn Clock Budget</div></div>
+    <div class="kpi"><div class="val">1.5 GB</div><div class="lbl">Sandboxed RAM Cap</div></div>
+  </div>
+
+  <div class="flow">
+    <div class="node blue">
+      <h4>Stochastic Environment &amp; Sensors</h4>
+      <ul><li>8×8 grid (4×64-bit board masks)</li><li>Perturbed T'<sub>ij</sub> = max(0, T<sub>ij</sub>(1+ε))</li><li>Acoustic floor obs (Squeak/Scratch)</li><li>Noisy Manhattan dist e ∈ {−1,0,1,2}</li><li>Search feedback ((x,y), hit/miss)</li><li><code>OpponentTempoTracker</code> bitmask diff</li></ul>
+    </div>
+    <div class="arrow"></div>
+    <div class="node green">
+      <h4>BeliefTracker (64-State HMM)</h4>
+      <ul><li>Sanitizes NaN/Inf/zero-sum rows in T</li><li>Caches T, T² &amp; b<sub>1000</sub> = b<sub>0</sub>·T¹⁰⁰⁰</li><li>Bayes fusion: b⁻ · P(noise|x) · P(d|x)</li><li>Zero-posterior steady-state recovery</li><li>Pre-warmed <code>@jax.jit</code> matvec kernels</li><li>Forward rollouts: <code>predict_layers(ply)</code></li></ul>
+    </div>
+    <div class="arrow"></div>
+    <div class="node">
+      <h4>SearchEngine &amp; MidEvaluator</h4>
+      <ul><li>Dynamic clock pacing (0.08–7.2 s/turn)</li><li>Iterative-deepening negamax (d ≤ 13)</li><li>120k TT (EXACT/LOWER/UPPER) + killers</li><li>Multi-turn MacroContext (runs 4–7)</li><li>V = 115P<sub>Δ</sub> + 46Q<sub>c</sub> + 17.5C + 16R<sub>Δ</sub></li><li>Tempo-window PRIME safety probes</li></ul>
+    </div>
+    <div class="arrow"></div>
+    <div class="node orange">
+      <h4>Sense vs. Act Gate</h4>
+      <ul><li>EV<sub>s</sub> = 4(0.9p) − 2(1−0.9p)</li><li>Compares EV<sub>s</sub> vs board gain</li><li>Cooldown &amp; attempt caps</li><li>Score-lead risk scaling</li><li><code>Board.is_valid_move()</code> guard</li><li>Legal fallback guarantee</li></ul>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Bayesian 64-State POMDP Estimator (<code>BeliefTracker</code>)</h3>
+      <ul>
+        <li><strong>Transition Sanitization &amp; Burn-In:</strong> Sanitizes incoming 64&times;64 transition matrices (perturbed by &epsilon;<sub>ij</sub> &sim; U(−0.1, 0.1) in the game engine) against NaN/Inf and zero-sum rows, caches matrix powers (<code>T</code>, <code>T²</code>), and computes the exact 1,000-step rat head-start distribution (b<sub>1000</sub> = b<sub>0</sub>&middot;T¹⁰⁰⁰) from uniform prior b<sub>0</sub>(i) = 1/64.</li>
+        <li><strong>Multi-Modal Bayesian Sensor Fusion:</strong> Extracts 64-bit board masks (<code>_space</code>, <code>_primed</code>, <code>_carpet</code>, <code>_blocked</code>) to evaluate floor-dependent acoustic likelihoods P(noise | x) and noisy Manhattan distance likelihoods P(d | x) with offset distribution e &in; {−1, 0, +1, +2} at P(e) = (0.12, 0.70, 0.12, 0.06), clamping negative estimates at d = 0:
+          <code class="math">b<sub>t+1</sub>(x) &propto; [b<sub>t</sub>(x)·T^k] &middot; P(noise | cell(x)) &middot; P(d_obs | Manhattan(o, x))</code></li>
+        <li><strong>Search Feedback &amp; Pre-Warmed JAX Rollouts:</strong> Zeros out missed search cells, resets to steady-state b<sub>1000</sub> on captures, and pre-warms <code>@jax.jit</code> matrix-vector kernels during <code>__init__</code> so multi-ply forward belief rollouts (<code>predict_layers</code>) incur zero JIT compilation latency during timed play.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Horizon Planning, Macro Context &amp; Sensing Arbitration (<code>SearchEngine</code>)</h3>
+      <ul>
+        <li><strong>Iterative-Deepening Negamax &amp; Move Ordering:</strong> Explores immutable <code>forecast_move</code> states up to depth 13 using alpha-beta pruning, a 120,000-entry Transposition Table (<code>EXACT</code>, <code>LOWER</code>, <code>UPPER</code> bounds keyed on bitmasks, positions, scores, and turns), 3-slot killer moves, and history heuristics.</li>
+        <li><strong>Belief-Conditioned Evaluation &amp; Macro Horizon:</strong> Scores leaves via <code>V = 115·P_&Delta; + 46·Q_carpet + 17.5·C_conv + 4.4·M_mob + 16·R_&Delta; + 1.1·C_center</code>, weighting top-6 posterior rat cells by inverse Manhattan distance. <code>MacroContext</code> evaluates 2–4 turn horizons to build high-scoring length 4–7 carpet runs (+6 to +21 pts) while penalizing premature short rolls.</li>
+        <li><strong>Opponent Tempo &amp; Sense-vs-Act Arbitration:</strong> <code>OpponentTempoTracker</code> diffs 64-bit masks to infer opponent move types and boost safe <code>PRIME</code> setups during low-impact opponent turns. Decouples <code>SEARCH</code> from tree branching, substituting a rat search only when calibrated expected value <code>EV = 4(0.9p) - 2(1 - 0.9p)</code> beats board gain across phase, lead/deficit, cooldown, and opponent hit-rate gates.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2B ============ -->
+<section id="benchmark">
+  <div class="banner">
+    <h2>2B. Subprocess Sandboxed Tournament Engine &amp; Automated Benchmark Architecture</h2>
+    <span class="tag">Python Multiprocessing • Subprocess Sandboxing • JSON Telemetry • Automated Regression</span>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Isolated Process Execution &amp; Fault-Tolerant Runtime (<code>PlayerProcess</code>)</h3>
+      <ul>
+        <li><strong>Resource &amp; Timing Enforcement:</strong> Executes competing agents inside isolated multiprocessing workers with strict resource caps (<strong>1,536 MB RAM</strong>, <strong>4 GB VRAM</strong>, 30s init timeout, 240s total game clock across 40 turns, 5s queue allowance) and optional privilege dropping / seccomp sandboxing.</li>
+        <li><strong>Closed-Loop Clock Pacing (<code>_compute_deadline</code>):</strong> Dynamically allocates per-turn compute budgets (0.08s–7.2s, targeting 82% clock spend with an 18s reserve buffer and 1.0s safety margin) based on spend lag, pace ratio, branching factor, and game phase (<code>opening</code>, <code>midgame</code>, <code>endgame</code>).</li>
+        <li><strong>Telemetry Commentary (<code>commentate</code>):</strong> Emits live per-turn diagnostics tracking peak posterior probability, search hit rate, active JAX backend, clock spend, tempo windows, and macro-plan cancellation reasons.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Evolutionary Head-to-Head Benchmark Harness (<code>benchmark.py</code>)</h3>
+      <ul>
+        <li><strong>Multi-Game Stochastic Evaluation:</strong> Because transition matrices T'<sub>ij</sub> and corner obstacles vary stochastically every match, built automated batch harnesses (<code>benchmark.py</code>, <code>run_local_agents_series.py</code>, <code>verify_agents.py</code>) to run parallel multi-game series across the Apex agent lineage (<code>Apex-Mid</code>, <code>Apex-Macro</code>, <code>ApexEvo</code>, <code>Apex-Vanguard</code>, <code>Apex-Hybrid-1</code>).</li>
+        <li><strong>Granular Score-Source &amp; Failure Attribution:</strong> Parses match history JSON artifacts to decompose win/loss/tie rates by exact point source (carpet vs. prime vs. rat-search points, plus lost carpet/search penalties), wall-clock think time per turn, and engine termination codes (points win, timeout, invalid turn, crash, OOM).</li>
+        <li><strong>Edge-Case Unit Verification:</strong> Validates zero-probability Shannon entropy guards, out-of-bounds search coercion, and duplicate feedback token suppression prior to tournament deployment.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3A ============ -->
+<section id="flightsim">
+  <div class="banner">
+    <h2>3A. C++ Aircraft Flight Dynamics &amp; Performance Simulator (Dr. John Dec Research)</h2>
+    <span class="tag">C++ • CMake • Polymorphic OOP • Golden-Section Search • Bisection • Simpson's Rule</span>
+  </div>
+
+  <div class="flow">
+    <div class="node">
+      <h4>AIRCRAFT MODEL (Active C++ &amp; Planned Refactor)</h4>
+      <ul>
+        <li><strong>Geometry:</strong> area S, span, AR</li>
+        <li><strong>Aerodynamics:</strong> C<sub>D0</sub>, k, C<sub>Lmax</sub>, wave drag (planned)</li>
+        <li><strong>Propulsion:</strong> virtual T<sub>A</sub>/P<sub>A</sub>, TSFC/BSFC (planned)</li>
+        <li><strong>Mass/Inertia:</strong> weight W, inertia I<sub>ij</sub> (planned)</li>
+        <li><strong>Subclasses:</strong> Turbofan σ<sup>m</sup>(1−cM) · Turbojet T<sub>SL</sub>·σ<sup>m</sup> · Propeller η<sub>p</sub>·P<sub>shaft</sub>/V</li>
+      </ul>
+    </div>
+    <div class="arrow"></div>
+    <div class="node green">
+      <h4>ENVIRONMENT</h4>
+      <ul>
+        <li><strong>Active:</strong> 0–20 km ISA → <code>AtmosphereState</code></li>
+        <li>T, P, ρ, a = √(γRT); tropopause 11,000 m</li>
+        <li><strong>Next-gen (dashed in plan):</strong> TrajSim, EquilFlow &amp; Wind API, Matrix/Vector_JD</li>
+      </ul>
+    </div>
+    <div class="arrow"></div>
+    <div class="node blue">
+      <h4>MANEUVER &amp; PERFORMANCE SOLVERS</h4>
+      <ul>
+        <li>Golden-section V<sub>climb</sub></li>
+        <li>70-iter ceiling bisection</li>
+        <li>1000-step Simpson time-to-climb</li>
+        <li>Sustained turn (stall vs P<sub>s</sub>=0 thrust limit) · instantaneous pull-up</li>
+        <li>Next: 6-DOF ODE</li>
+      </ul>
+    </div>
+    <div class="arrow"></div>
+    <div class="node orange">
+      <h4>MISSION PLANNER + INTERACTIVE GUI</h4>
+      <ul><li>In progress</li></ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <h3>Implemented Physics Engine &amp; Numerical Solvers (<code>Airplane.cpp</code>)</h3>
+    <ul>
+      <li><strong>Polymorphic Architecture:</strong> Abstract <code>Airplane</code> base class encapsulates geometry (S, AR, W), parabolic drag polar (C<sub>D</sub> = C<sub>D0</sub> + k·C<sub>L</sub>²), two-layer ISA atmosphere, and maneuver solvers, while concrete subclasses override pure virtual <code>thrustAvailable(V, h)</code> and <code>powerAvailable(V, h)</code>:
+        <ul>
+          <li><code>Propeller</code>: P<sub>shaft</sub> = max(0, P<sub>SL</sub>·(1.132&sigma; − 0.132)), T<sub>A</sub> = &eta;<sub>p</sub>·P<sub>shaft</sub> / V.</li>
+          <li><code>Turbojet</code>: T<sub>A</sub> = max(0, T<sub>SL</sub>·&sigma;^m), P<sub>A</sub> = T<sub>A</sub>·V.</li>
+          <li><code>Turbofan</code>: First-order Mach lapse T<sub>A</sub> = max(0, T<sub>SL</sub>·&sigma;^m·(1 − c·M)).</li>
+        </ul>
+      </li>
+      <li><strong>Two-Region ISA Atmosphere (<code>Airplane::isa</code>):</strong> Models tropospheric lapse (h &le; 11 km, T = T<sub>0</sub> − L·h, P = P<sub>0</sub>·(T/T<sub>0</sub>)^(g/RL)) and isothermal stratosphere (h &gt; 11 km, exponential pressure decay) to return <code>AtmosphereState {T, P, rho, a}</code>.</li>
+      <li><strong>Numerical Optimization &amp; Integration Methods:</strong>
+        <ul>
+          <li><code>bestClimbSpeed(h)</code>: 100-iteration <strong>Golden-Section Search</strong> (&epsilon; = 10⁻³ m/s) over [max(1.0, 1.001·V<sub>stall</sub>), 300 m/s] maximizing specific excess power P<sub>s</sub> = (P<sub>A</sub> − P<sub>R</sub>)/W.</li>
+          <li><code>serviceCeiling()</code>: Dynamic bracket expansion (20 km &rarr; 50 km cap) followed by 70-iteration <strong>Bisection root-finder</strong> for ROC<sub>max</sub>(h) = 0.508 m/s (100 ft/min).</li>
+          <li><code>timeToClimb(h1, h2)</code>: 1,000-interval <strong>Composite Simpson’s Rule</strong> (1, 4, 2, ..., 4, 1) integrating &int; dh / ROC(h) with singularity guards (ROC &lt; 10⁻⁹ m/s &rarr; &infin;).</li>
+        </ul>
+      </li>
+      <li><strong>Sustained Turn &amp; Pull-Up Envelope:</strong> Computes stall limit n<sub>stall</sub> = q·S·C<sub>Lmax</sub> / W and P<sub>s</sub> = 0 thrust limit n<sub>thrust</sub> = &radic;((T<sub>A</sub> − q·S·C<sub>D0</sub>)·q·S / (k·W²)) to evaluate turn rate &psi;&#775; = g&radic;(n² − 1)/V, turn radius R = V²/(g&radic;(n² − 1)), and pull-up radius R = V²/(g(n − 1)).</li>
+    </ul>
+    <p style="margin-top:10px"><strong>Next-Phase Architecture Expansion:</strong> Wiring in dormant <code>TrajSim</code> dependencies (<code>Matrix.h</code>, <code>Vector_JD.h</code>, <code>EquilFlow.h</code>) and refactoring from inheritance to decoupled subsystem composition with numerical ODE trajectory integration and Euler/quaternion attitude kinematics.</p>
+  </div>
+</section>
+
+<!-- ============ 3B ============ -->
+<section id="cfd">
+  <div class="banner">
+    <h2>3B. Multi-Element NACA 4412 Airfoil RANS CFD Analysis (ANSYS Fluent, Re ≈ 200,000, V<sub>&infin;</sub> = 30 m/s)</h2>
+    <span class="tag">ANSYS Fluent 2026 R1 • k-ω SST Turbulence • Structured C-Mesh • Slat/Flap Trade Study</span>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <p>Conducted 2D planar steady-state pressure-based RANS simulations using a <strong>structured C-mesh</strong> and <strong>k-&omega; SST turbulence model</strong> to resolve adverse pressure gradients and boundary-layer separation across a clean NACA 4412 baseline and three high-lift configurations (&alpha; = 0&deg;). Personally executed the ANSYS Fluent simulations for <strong>Configuration A (5&deg; Slat / 13&deg; Flap)</strong> and <strong>Configuration B (20&deg; Slat / 13&deg; Flap)</strong>:</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Configuration</th><th>Slat / Flap Angle</th><th>Suction Peak &amp; Boundary-Layer Physics</th><th>Flight Regime &amp; Design Tradeoff</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Clean Baseline</strong></td><td>0&deg; / 0&deg;</td><td>Single leading-edge suction peak (C<sub>p</sub> &approx; −0.85); 1 stagnation point; single boundary layer stalls earliest.</td><td><strong>Cruise:</strong> Lowest drag, highest cruise efficiency, lowest C<sub>Lmax</sub>.</td></tr>
+          <tr><td><strong>Config A (My Sim)</strong></td><td><strong>5&deg; Slat / 13&deg; Flap</strong></td><td>Triple-peak load sharing (slat, main, flap); thin wake; attached flow with minimal trailing-edge separation.</td><td><strong>High L/D Efficiency:</strong> Highest lift-to-drag ratio among high-lift cases.</td></tr>
+          <tr><td><strong>Config B (My Sim)</strong></td><td><strong>20&deg; Slat / 13&deg; Flap</strong></td><td>High-momentum slat gap jet re-energizes main boundary layer, offloading main suction peak to C<sub>p</sub> &approx; −0.45 to −0.50.</td><td><strong>Takeoff Balanced:</strong> High C<sub>L</sub> and delayed stall with moderate drag penalty.</td></tr>
+          <tr><td><strong>Config C</strong></td><td>15&deg; Slat / 30&deg; Flap</td><td>Maximum camber &amp; stacked circulation across 3 elements; strong adverse pressure gradient induces flap recirculation wake.</td><td><strong>Landing Max-Lift:</strong> Highest C<sub>Lmax</sub> and steep-approach drag.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="img-grid four">
+    <figure><a href="images/5_13_Mesh.png" target="_blank" rel="noopener"><img loading="lazy" src="images/5_13_Mesh.png" alt="C-Mesh Domain" /></a><figcaption>Fig 3.1: Structured C-Mesh Refinement Around 5°/13° Slat, Main Airfoil &amp; Flap</figcaption></figure>
+    <figure><a href="images/PressureCoeffGraph.png" target="_blank" rel="noopener"><img loading="lazy" src="images/PressureCoeffGraph.png" alt="Triple Peak Cp Plot" /></a><figcaption>Fig 3.2: Triple-Peak Cp Distribution (Slat, Main Element, Flap Load Sharing)</figcaption></figure>
+    <figure><a href="images/PressureCoeffContour.png" target="_blank" rel="noopener"><img loading="lazy" src="images/PressureCoeffContour.png" alt="Cp Contours" /></a><figcaption>Fig 3.3: Static Pressure / Cp Contours Showing 3 Stagnation Regions</figcaption></figure>
+    <figure><a href="images/VelocityField.png" target="_blank" rel="noopener"><img loading="lazy" src="images/VelocityField.png" alt="Velocity Vectors" /></a><figcaption>Fig 3.4: Velocity Vector Field Highlighting Slat-Gap Flow Energization</figcaption></figure>
+  </div>
+</section>
+
+<!-- ============ 4 ============ -->
+<section id="quadcopter">
+  <div class="banner">
+    <h2>4. Custom FPV Quadcopter Build, Instrumentation &amp; Betaflight 4.4.3 PID Flight Testing</h2>
+    <span class="tag">STM32F405 • BMI270 Gyro • 50A 4-in-1 ESC • Blackbox Logging • PID Tuning</span>
+  </div>
+
+  <div class="project-row">
+    <div class="card">
+      <h3>Hardware Trade Study, Stack Architecture &amp; Flight Test Methodology</h3>
+      <ul>
+        <li><strong>Confirmed Airframe &amp; Avionics Stack:</strong> Executed cost–performance trade studies to select, assemble, and solder a 5-inch freestyle testbed: <strong>STEELE 5 (220 mm, 5 mm carbon arm)</strong> frame, <strong>SpeedyBee F405 V3</strong> stack (<code>STM32F405</code> MCU, <code>BMI270</code> gyro, onboard barometer, microSD Blackbox, 50A 4-in-1 ESC), <strong>Racerstar BR2205 2300KV</strong> brushless motors, <strong>HQProp 5&times;4.3&times;3 V2S</strong> tri-blade polycarbonate props, <strong>14.8V 4S 1300mAh 100C</strong> LiPo, <strong>Foxeer Razer Mini 1200TVL</strong> camera, <strong>EWRF 5.8GHz 650mW</strong> VTX, and Hall-gimbal <strong>JumperRC T-Lite V2</strong> OpenTX transmitter.</li>
+        <li><strong>Decoupled Propulsion vs. Controls Testing:</strong> Separated static/climb propulsion efficiency from closed-loop PID attitude tuning. Quantified electrical input power (P = V·I) via inline wattmeter and vertical climb kinematics (a &approx; 2h/t²) across fixed altitude intervals to evaluate thrust-to-power efficiency (&eta;<sub>T</sub> = T/P, achieving a <strong>+15% improvement</strong>).</li>
+        <li><strong>Controlled 5-Stage Betaflight 4.4.3 PID Tuning:</strong> Backed up CLI config and flashed target <code>SPEEDYBEEF405V3</code> with microSD Blackbox logging. Executed sequential single-parameter flight test sweeps: (1) Baseline oscillation/overshoot characterization &rarr; (2) <strong>P-gain</strong> attitude error responsiveness &rarr; (3) <strong>D-gain</strong> prop-wash damping vs. motor thermal noise &rarr; (4) <strong>I-gain</strong> sustained attitude hold &amp; disturbance rejection &rarr; (5) Repeatability validation.</li>
+      </ul>
+    </div>
+    <figure>
+      <img loading="lazy" src="images/drone.jpg" alt="Soldered FPV Quadcopter Testbed" />
+      <figcaption>Fig 4.1: Assembled &amp; Soldered 220mm Carbon-Fiber Quadcopter Testbed (SpeedyBee STM32F405 V3 Stack, BR2205 2300KV Motors, HQProp 5×4.3×3, 4S LiPo)</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ 5 ============ -->
+<section id="lunar">
+  <div class="banner">
+    <h2>5. "First Step" Lunar EVA Boot Multi-Sensor Fusion Platform — 1st Place, GT AIAA Hackathon</h2>
+    <span class="tag">UWB GPR (1.5–3 GHz) • MEMS FT-NIR • PZT Energy Harvesting • SM-24 Geophone</span>
+  </div>
+  <div class="card">
+    <p>Designed a 3-inch Kevlar/rubber sensorized EVA boot sole and rigid rear-ankle electronics housing that collects, filters, normalizes, and cross-references 4 sensor modalities on every astronaut footstep against the NASA Planetary Data System (PDS) library to flag subsurface voids and classify ISRU minerals in real time:</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Sensor Modality</th><th>Hardware &amp; Placement</th><th>Operating Specs &amp; Depth</th><th>Power &amp; Data / Step</th><th>Multi-Sensor Fusion &amp; Hazard Role</th></tr></thead>
+        <tbody>
+          <tr><td><strong>UWB Ground-Penetrating Radar</strong></td><td>6&times;6 cm patch antenna in sole; heel PCB</td><td>1.5–3 GHz, 2 ns pulse; <strong>3–5 m depth</strong> (5–10 cm res.)</td><td>~225 mW avg (150 ms active); 1–5 KB</td><td>Maps subsurface lava tubes, voids, and water-ice boundaries.</td></tr>
+          <tr><td><strong>MEMS FT-NIR Spectrometer</strong></td><td>2 cm³ chip, sapphire window, NIR LEDs</td><td>900–2500 nm range (10–50 nm resolution)</td><td>~15–25 mW avg (50 ms flash); 0.5–1 KB</td><td>Identifies olivine, pyroxene, high-Ti ilmenite &amp; OH⁻ water indicators.</td></tr>
+          <tr><td><strong>Piezoelectric (PZT) Cleats</strong></td><td>mm-scale Lead Zirconate Titanate on cleats</td><td>Top-cm force-displacement &amp; soil compaction</td><td><strong>Net +10 to +25 mW generated</strong>; 0.1 KB</td><td>Quantifies regolith bearing capacity &amp; harvests footfall energy for GPR.</td></tr>
+          <tr><td><strong>Seismic / Acoustic Geophone</strong></td><td>2–5 cm³ MEMS geophone in heel cup</td><td>10–240 Hz, ~28.8 V/m/s (SM-24 grade); <strong>3–20 m</strong></td><td>Passive (~1–5 mW digitizer); 5–20 KB</td><td>Fuses with PZT: thin weak surface + deep seismic void = collapse alert.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6 ============ -->
+<section id="asdl">
+  <div class="banner">
+    <h2>6. Aircraft Engine Degradation Prognostics &amp; RUL Maintenance Scheduler (ASDL Research)</h2>
+    <span class="tag">Python • Streamlit • NumPy/pandas • RUL Gradient Heuristics • Interactive Visualization</span>
+  </div>
+  <div class="card">
+    <p>Built a modular Python <strong>Streamlit</strong> analytics dashboard (<code>Dashboard.py</code>) and vector-normalized ingestion pipeline (<code>Data_Generator.py</code>) pairing <strong>10 gas-path auditing metrics across 5 turbofan subsystems</strong> (Burner/Fan, LPC, HPC, HPT, LPT). Implemented a standalone Remaining Useful Life (RUL) scheduler (<code>Scheduler.py: make_sched_df</code>) that computes worst-case paired subsystem degradation d[j] = max(m<sub>0</sub>[j], m<sub>1</sub>[j]), detects threshold crossings j*, estimates local degradation rate RoC = &nabla;d[j] via <code>np.gradient</code>, scales risk-adjusted threshold &tau;<sub>eff</sub> = &tau;(1 + RoC), assigns priority tiers (<code>Critical</code> &le; 0.5&tau;, <code>High</code> &le; &tau;, <code>Medium</code> &le; 1.5&tau;), and resolves maintenance-day collisions across short/medium-haul (11 airports/24 segments) and long-haul (15 airports/27 segments) route maps:</p>
+    <div class="img-grid two">
+      <figure class="dark"><a href="images/asdl_chart.png" target="_blank" rel="noopener"><img loading="lazy" src="images/asdl_chart.png" alt="ASDL Streamlit Degradation Trajectories" /></a><figcaption>Fig 6.1: Interactive Streamlit Dashboard Visualizing 10 Paired Subsystem Degradation Traces, RUL Slider (τ=20), and Threshold Crossings (Synthetic Demo Run)</figcaption></figure>
+      <figure class="dark"><a href="images/asdl_schedule.png" target="_blank" rel="noopener"><img loading="lazy" src="images/asdl_schedule.png" alt="ASDL Conflict-Free Maintenance Schedule Table" /></a><figcaption>Fig 6.2: Automated RUL Scheduler Output Flagging Critical/High Priority Subsystems onto Conflict-Free Maintenance Days Alongside Healthy Component Filtering</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Nicholas Guido — Technical Engineering Portfolio</span>
+    <span><a href="mailto:nicholasguido16@gmail.com">nicholasguido16@gmail.com</a> · <a href="https://linkedin.com/in/nicholas-guido/">LinkedIn</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
